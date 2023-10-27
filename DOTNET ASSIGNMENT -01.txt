@@ -1,0 +1,73 @@
+QU NO=01
+ANS 
+
+namespace ConsoleApp2
+{
+    class Calculator
+    {
+        public int Add(int x,int y)
+        {
+            return x + y;
+        }
+        public int Product(int x,int y)
+        {
+            return x * y;
+
+        }
+    }
+     class Program
+    {
+        static void Main(string[] args)
+        {
+          //  Console.WriteLine("enter the two number");
+           // int x =  int Console.ReadLine();
+           // int y= int Console.ReadLine();
+
+            Calculator c1 = new Calculator();
+            int sumResult = c1.Add(5, 9);
+            Console.WriteLine("sum="+sumResult);
+            int productResult = c1.Product(4, 9);
+            Console.WriteLine("product=" + productResult);
+
+
+        }
+    }
+}
+
+Qu no=03
+
+ans
+namespace Cdac
+{
+    class Student
+    {
+        public void Add(string name)
+        {
+            Console.WriteLine($"Added student {name} in DAC.");
+
+        }
+    }
+
+}
+namespace DBDA
+{
+    class Student
+    {
+        public void Add(string name)
+        {
+            Console.WriteLine($" Added Student {name} in DBDA");
+        }
+
+    }
+   
+}
+class Program
+{
+    static void Main(string[] args)
+    {
+        Cdac.Student student = new Cdac.Student();      
+        DBDA.Student student1 = new DBDA.Student(); 
+        student.Add("Aekansh");
+        student1.Add("singh");
+    }
+}

@@ -1,0 +1,98 @@
+namespace ConsoleApp6
+{
+    class student
+    {
+        private string name;
+        private int maths;
+        private int science;
+        private int eng;
+        public student(string name, int maths, int science, int eng)
+        {
+            this.name = name;
+            this.maths = maths;
+            this.science = science;
+            this.eng = eng;
+
+        }
+        public int totalmarks()
+
+        {
+            return maths + science + eng;
+        }
+        public void display()
+        {
+            int Totalmarks = totalmarks();
+            Console.WriteLine(" NAME = " + name + " TOTALMARKS = " + Totalmarks);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter the name");
+            string x=Console.ReadLine();
+            Console.WriteLine("enter the marks in maths");
+            int y=int.Parse(Console.ReadLine());
+            Console.WriteLine("enter the marks in science");
+            int z = int.Parse(Console.ReadLine());
+            Console.WriteLine("enter the marks in english");
+            int a = int.Parse(Console.ReadLine());
+
+            student s1 = new student(x,y,z,a);
+            s1.display();   
+
+        }
+    }
+} 
+
+Q2 Create a class account having member name, id, balance
+Create a method -public void deposit (int amt) {balance=balance tamt} Create a method withdraw -public void withdraw(int amt) {balance=balance-amt}
+Create display method which will display name and balance.
+Create 2 object and do transaction.
+
+Solution
+
+namespace ConsoleApp6
+{
+    class Account
+    {
+        private string name;
+        private string id;
+        private int balance;
+
+        public Account(String name, string id, int balance)
+        {
+            this.name = name;
+            this.id = id;
+            this.balance = balance;
+        }
+        public void deposit(int amt)
+        {
+            balance = balance + amt;
+        }
+        public void withdraw(int amt)
+        {
+             balance = balance - amt;
+        }
+        public void display()
+        {
+            Console.WriteLine("NAME =" + name+ " Balance: " + balance);
+        }
+    }
+    class Program
+    {
+         static void Main(String[] args)
+        {
+            Account act = new Account("Aekansh", "123", 5000);
+            Console.WriteLine("account intial info");
+            act.display();
+            Console.WriteLine("balance after withdrawing ");
+            act.withdraw(800);
+            act.display();
+            Console.WriteLine("balance after depositing");
+            act.deposit(100);
+            act.display() ; 
+            
+        }
+    }
+}
