@@ -1,0 +1,135 @@
+Qu no=01
+ans
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp15
+{
+    delegate void strmod(string str);
+    class delegatetest
+    {
+        public static void Removespaces(string a)
+        {
+            string temp = " ";
+            int i;
+            Console.WriteLine("removing spaces");
+            for (i = 0; i < a.Length; i++)
+            {
+                if (a[i] != ' ')
+                    temp += a[i];
+            }
+            a = temp;
+            Console.WriteLine(a);
+
+        }
+        public static void Reverse(string a)
+        {
+            string temp = " ";
+            int i;
+            for (i = a.Length - 1; i >= 0; i--)
+            {
+                temp += a[i];
+            }
+            a = temp;
+            Console.WriteLine(a);
+
+        }
+    }
+
+    class program
+    {
+        static void Main(string[] args)
+        {
+            strmod strop;
+            string str1;
+            strmod rs = delegatetest.Removespaces;
+            strmod rev = delegatetest.Reverse;
+            str1 = "MY name is aekansh singh";
+            strop = rs;
+            strop += rev;
+            strop(str1);
+
+
+
+
+        }
+    }
+}
+
+QU NO=02Create delegate Delegate void math(int a, int b)
+Write static method Add to add 2 number  and print it.and product which will display product of 2 number
+Create a variable which can point to add and then to product and wirh single method call invoke both the method.
+
+using System;
+
+namespace ConsoleApp15
+{
+    delegate void MyMath(double x, double y);
+
+    class MulticastDelegate
+    {
+        public static void Add(double a, double b)
+        {
+            Console.WriteLine("Addition of two numbers: " + (a + b));
+        }
+
+        public static void Product(double a, double b)
+        {
+            Console.WriteLine("Multiplication between two numbers: " + (a * b));
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MyMath strop;
+            MyMath ad = MulticastDelegate.Add;
+            MyMath pd = MulticastDelegate.Product;
+
+            strop = ad;
+            strop += pd;
+
+            strop(5, 6);
+        }
+    }
+}
+QU NO=03
+Write square and cube static  method and call it through delegate:=Then make same as instance method can call it through delegate
+SOLUTION
+namespace ConsoleApp15
+{
+    delegate void MyMath(double x);
+
+    class MulticastDelegate
+    {
+        public static void Square(double a)
+        {
+            Console.WriteLine("Square of number: " + (a * a));
+        }
+
+        public static void Cube(double a)
+        {
+            Console.WriteLine("Cube of  number: " + (a * a * a));
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MyMath strop;
+            MyMath ad = MulticastDelegate.Square;
+            MyMath pd = MulticastDelegate.Cube;
+
+            strop = ad;
+            strop += pd;
+
+            strop(5);
+        }
+    }
+}
