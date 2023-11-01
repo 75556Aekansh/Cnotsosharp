@@ -1,0 +1,95 @@
+namespace ConsoleApp17
+{
+    delegate void wd(double x, double bal, string nm);
+    abstract class Account
+    {
+        public event wd wdevent;
+        static int id;
+        int Accid;
+        string name;
+        double balance;
+        protected const double minbal = 1000;
+        public Account(String name, double balance)
+        {
+            Accid = ++id;
+            Name = name;
+            Balance = balance;
+
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public double Balance
+        {
+            get { return balance; }
+            set { balance = value; }
+        }
+        public void deposit(double a)
+        {
+            Balance += a;
+
+        }
+        public void Onwithdraw(double a, double balance, string name)
+        {
+            if (wdevent != null)
+                wdevent(a, Balance, name);
+        }
+        public abstract void withdraw(double e);
+
+
+        class Current : Account
+        {
+            public Current(String name, double balance) : base(name, balance)
+            {
+
+            }
+            public override void withdraw(double a)
+            {
+                Balance = Balance - a;
+                Onwithdraw(a, Balance, Name);
+            }
+        }
+        class Saving : Account
+        {
+            public Saving(String name, double balance) : base(name, balance)
+            {
+
+            }
+            public override void withdraw(double a)
+            {
+                Balance = Balance - a;
+                Onwithdraw(a, Balance, Name);
+            }
+        }
+        class message
+        {
+            public void email(double a, double balance, string name)
+            {
+                Console.WriteLine("E-mail : Amount withdrawn : {0} new bal={1} name={2}", a, balance, name);
+            }
+            public void sms(double a, double balance, string name)
+            {
+                Console.WriteLine("E-mail : Amount withdrawn : {0} new bal={1} name={2}", a, balance, name);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            message message = new message();
+            Account[] A = new Account[3];
+            A[0]=new Saving("A",10000);
+            A[1] = new Current("B", 20000);
+            A[2] = new Saving("C",30000);
+            for (int i = 0;i<A.Length;i++)
+            {
+                A[i].wdevent += message.email;
+                A[i].wdevent += message.sms;
+            }
+            A[0].deposit(30000);
+            A[1].withdraw(1000);
+            A[2].withdraw(5000);
+        }
+    }
+}
