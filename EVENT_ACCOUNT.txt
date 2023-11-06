@@ -1,0 +1,134 @@
+using System;
+using System.Collections.Generic;
+
+delegate void wd(double x, double balance, string name);
+
+abstract class Account
+{
+    public event wd wdevent;
+    static int id;
+    int accid;
+    string name;
+    public double balance;
+    protected const double minbal = 1000;
+
+    public Account(string name, double balance)
+    {
+        accid = id;
+        this.name = name;
+        this.balance = balance;
+    }
+
+    public void deposit(double amt)
+    {
+        balance += amt;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        set
+        {
+            if (value.Length >= 2 && value.Length <= 15)
+            {
+                name = value;
+            }
+        }
+    }
+
+    public double Balance
+    {
+        get { return balance; }
+        set { balance = value; }
+    }
+
+    public void OnWithdraw(double amt, double newBalance, string name)
+    {
+        if (wdevent != null)
+        {
+            wdevent(amt, newBalance, name);
+        }
+    }
+
+    public abstract void withdraw(double e);
+}
+
+class Saving : Account
+{
+    public Saving(string name, double balance) : base(name, balance)
+    {
+    }
+
+    public double PayInterest(double rate)
+    {
+        if (rate < 0 || rate > 100)
+        {
+            throw new ArgumentException("Invalid interest rate");
+        }
+        double interest = (rate / 100) * balance;
+        balance += interest;
+        return interest;
+    }
+    public override void withdraw(double a)
+    {
+        if (a < 0 || a > balance - minbal)
+        {
+            throw new ArgumentException("Invalid withdrawal amount");
+        }
+        Balance = Balance - a;
+        OnWithdraw(a, Balance, Name);
+    }
+}
+
+class Current : Account
+{
+    public Current(string name, double balance) : base(name, balance)
+    {
+    }
+
+    public override void withdraw(double a)
+    {
+        Balance = Balance - a;
+        OnWithdraw(a, Balance, Name);
+    }
+}
+
+class Message
+{
+    public void email(double a, double newBalance, string name)
+    {
+        Console.WriteLine("E-mail: Amount withdrawn: {0}, new balance: {1}, name: {2}", a, newBalance, name);
+    }
+
+    public void mobile(double a, double newBalance, string name)
+    {
+        Console.WriteLine("Mobile: Amount withdrawn: {0}, new balance: {1}, name: {2}", a, newBalance, name);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Message m = new Message();
+        List<Account> list = new List<Account>();
+
+        Account account1 = new Saving("Aekansh", 35000);
+        Account account2 = new Saving("pratap", 18000);
+        Account account3 = new Current("Singh", 40000);
+
+        list.Add(account1);
+        list.Add(account2);
+        list.Add(account3);
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            list[i].wdevent += m.email;
+            list[i].wdevent += m.mobile;
+        }
+
+        account1.withdraw(1000);
+        account2.deposit(1000);
+        account2.withdraw(6000);
+    }
+}
